@@ -1,0 +1,6 @@
+2022-04-18 19:59:55 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "WEEKDAYS" not found; SQL statement:
+SELECT * FROM WEEKDAYS [42102-200]
+2022-04-18 20:11:49 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "WEEKDAYS" not found; SQL statement:
+SELECT * FROM WEEKDAYS [42102-200]
