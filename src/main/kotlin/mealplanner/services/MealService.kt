@@ -1,6 +1,7 @@
 package mealplanner.services
 
 import mealplanner.entities.Meal
+import mealplanner.entities.Weekday
 import mealplanner.repositories.MealRepository
 import org.springframework.stereotype.Service
 
@@ -19,6 +20,10 @@ class MealService(val mealRepository: MealRepository) {
 
 	fun deleteMeal(meal: Meal) {
 		mealRepository.delete(meal)
+	}
+
+	fun saveWeekday(meal: Meal) {
+		mealRepository.save(meal)
 	}
 
 }

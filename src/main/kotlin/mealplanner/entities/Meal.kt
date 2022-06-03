@@ -5,7 +5,7 @@ import org.springframework.data.relational.core.mapping.Table
 
 @Table("MEALS")
 data class Meal(
-	@Id val id: String,
+	@Id val id: String?,
 	val weekday_id: String,
 
 	val name: String,

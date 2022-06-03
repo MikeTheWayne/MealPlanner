@@ -17,13 +17,27 @@
     <table>
         <tr th:each="weekday : ${weekdays}">
             <td th:text="${weekday.name}"></td>
-            <td th:each="meal : ${weekday.meals}" th:text="${meal.id}"></td>
+            <!-- Add new meal form -->
+            <td>
+                <form th:method="post" th:action="@{'/planner/weekday/new-meal'}" th:object="${weekday}">
+                    <p>Meal name: <input type="text" maxlength="20" th:field="*{name}" /></p>
+                    <input type="hidden" th:value="${weekday.id}" name="weekday_id"/>
+                    <input type="hidden" th:value="0" name="kcal"/>
+                    <input type="hidden" th:value="0" name="protein"/>
+                    <input type="hidden" th:value="0" name="sat_fat"/>
+                    <input type="hidden" th:value="0" name="fiveADay"/>
+                    <input type="hidden" th:value="0" name="cost"/>
+                    <button type = "submit">New Meal</button>
+                </form>
+            </td>
             <!-- Delete button -->
             <td>
                 <form th:method="post" th:action="@{'/planner/weekday/{id}/delete' (id=${weekday.id})}">
                     <button type="submit">Delete</button>
                 </form>
             </td>
+            <!-- Meal list -->
+            <td th:each="meal : ${weekday.meals}" th:text="${meal.id}"></td>
         </tr>
     </table>
 </body>

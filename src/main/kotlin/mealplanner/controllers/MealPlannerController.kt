@@ -1,5 +1,6 @@
 package mealplanner.controllers
 
+import mealplanner.entities.Meal
 import mealplanner.entities.Weekday
 import mealplanner.services.MealService
 import mealplanner.services.WeekdayService
@@ -31,6 +32,8 @@ class MealPlannerController(val weekdayService: WeekdayService,
 		model["weekdays"] = weekdays
 		// Add a blank weekday object, to be populated using a form on the frontend
 		model["weekday"] = Weekday(null, "", setOf())
+		// Add a blank weekday object, to be populated using a form on the frontend
+		model["meal"] = Meal(null, "", "", 0, 0, 0, 0, 0)
 
 		return "planner"
 	}
@@ -69,6 +72,21 @@ class MealPlannerController(val weekdayService: WeekdayService,
 
 		// Delete the weekday itself
 		weekdayService.deleteWeekday(weekdayToDelete)
+
+		// Redirect back to the planner page
+		return "redirect:/planner"
+	}
+
+	/**
+	 * Triggers the saving of the newly populated meal object to the database.
+	 *
+	 * @param meal The newly populated meal object to be saved.
+	 * @return A redirect to the planner page.
+	 */
+	@PostMapping("/weekday/new-meal")
+	fun newMeal(@ModelAttribute meal: Meal) : String {
+		// Save meal
+		mealService.saveWeekday(meal)
 
 		// Redirect back to the planner page
 		return "redirect:/planner"
