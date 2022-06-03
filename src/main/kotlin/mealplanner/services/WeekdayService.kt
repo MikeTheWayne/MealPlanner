@@ -15,4 +15,12 @@ class WeekdayService(val weekdayRepository: WeekdayRepository) {
 		weekdayRepository.save(weekday)
 	}
 
+	fun deleteWeekday(weekday: Weekday) {
+		weekdayRepository.delete(weekday)
+	}
+
+	fun getWeekdayById(id: String) : Weekday {
+		return weekdayRepository.findById(id).get()
+	}
+
 }

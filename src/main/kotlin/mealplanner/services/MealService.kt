@@ -17,4 +17,8 @@ class MealService(val mealRepository: MealRepository) {
 		return mealRepository.findAllByWeekdayId(id)
 	}
 
+	fun deleteMeal(meal: Meal) {
+		mealRepository.delete(meal)
+	}
+
 }

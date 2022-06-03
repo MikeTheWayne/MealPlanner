@@ -6,10 +6,7 @@ import mealplanner.services.WeekdayService
 import org.springframework.stereotype.Controller
 import org.springframework.ui.Model
 import org.springframework.ui.set
-import org.springframework.web.bind.annotation.GetMapping
-import org.springframework.web.bind.annotation.ModelAttribute
-import org.springframework.web.bind.annotation.PostMapping
-import org.springframework.web.bind.annotation.RequestMapping
+import org.springframework.web.bind.annotation.*
 
 /**
  * The controller for the planner view.
@@ -49,6 +46,29 @@ class MealPlannerController(val weekdayService: WeekdayService,
 	fun addWeekday(@ModelAttribute weekday: Weekday) : String {
 		// Save the weekday received from the model
 		weekdayService.saveWeekday(weekday)
+
+		// Redirect back to the planner page
+		return "redirect:/planner"
+	}
+
+	/**
+	 * Deletes the weekday received through the path variable, along with any meal children.
+	 *
+	 * @param weekdayId The ID of the weekday to be deleted, passed in as a path variable.
+	 * @return A redirect to the planner page.
+	 */
+	@PostMapping("/weekday/{id}/delete")
+	fun deleteWeekday(@PathVariable("id") weekdayId: String) : String {
+		// Find weekday to be deleted
+		val weekdayToDelete = weekdayService.getWeekdayById(weekdayId)
+
+		// Delete all meal children
+		weekdayToDelete.meals?.forEach {
+			mealService.deleteMeal(it)
+		}
+
+		// Delete the weekday itself
+		weekdayService.deleteWeekday(weekdayToDelete)
 
 		// Redirect back to the planner page
 		return "redirect:/planner"

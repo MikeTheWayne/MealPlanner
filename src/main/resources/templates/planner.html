@@ -16,8 +16,14 @@
     <!-- Planner table -->
     <table>
         <tr th:each="weekday : ${weekdays}">
-            <td th:text="${weekday.id}"></td>
+            <td th:text="${weekday.name}"></td>
             <td th:each="meal : ${weekday.meals}" th:text="${meal.id}"></td>
+            <!-- Delete button -->
+            <td>
+                <form th:method="post" th:action="@{'/planner/weekday/{id}/delete' (id=${weekday.id})}">
+                    <button type="submit">Delete</button>
+                </form>
+            </td>
         </tr>
     </table>
 </body>
