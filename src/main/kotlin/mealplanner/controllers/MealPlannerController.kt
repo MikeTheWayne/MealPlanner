@@ -1,11 +1,14 @@
 package mealplanner.controllers
 
+import mealplanner.entities.Weekday
 import mealplanner.services.MealService
 import mealplanner.services.WeekdayService
 import org.springframework.stereotype.Controller
 import org.springframework.ui.Model
 import org.springframework.ui.set
 import org.springframework.web.bind.annotation.GetMapping
+import org.springframework.web.bind.annotation.ModelAttribute
+import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestMapping
 
 /**
@@ -28,14 +31,27 @@ class MealPlannerController(val weekdayService: WeekdayService,
 		val weekdays = weekdayService.getWeekdays()
 
 		// Add weekdays into model
-		model["days"] = weekdays
-
-		// Add each meal for each weekday
-		weekdays.forEach {
-			model["day-${it.id}"] = mealService.getMealsForWeekdayId(it.id)
-		}
+		model["weekdays"] = weekdays
+		// Add a blank weekday object, to be populated using a form on the frontend
+		model["weekday"] = Weekday(null, "", setOf())
 
 		return "planner"
+	}
+
+	/**
+	 * Saves the weekday received from the view's form to the database. Redirects back to the main planner page once
+	 * the new entity has been persisted.
+	 *
+	 * @param weekday The weekday object received from the view as a model attribute.
+	 * @return A redirect route back to the main planner page.
+	 */
+	@PostMapping("/weekday")
+	fun addWeekday(@ModelAttribute weekday: Weekday) : String {
+		// Save the weekday received from the model
+		weekdayService.saveWeekday(weekday)
+
+		// Redirect back to the planner page
+		return "redirect:/planner"
 	}
 
 }

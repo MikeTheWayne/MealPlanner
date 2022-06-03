@@ -1,10 +1,24 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Planner</title>
 </head>
 <body>
     <h1>Meal Planner</h1>
+
+    <!-- Add buttons -->
+    <form th:method="post" th:action="@{'/planner/weekday'}" th:object="${weekday}">
+        <p>Weekday name: <input type="text" maxlength="20" th:field="*{name}" /></p>
+        <button type = "submit">Add Weekday</button>
+    </form>
+
+    <!-- Planner table -->
+    <table>
+        <tr th:each="weekday : ${weekdays}">
+            <td th:text="${weekday.id}"></td>
+            <td th:each="meal : ${weekday.meals}" th:text="${meal.id}"></td>
+        </tr>
+    </table>
 </body>
 </html>
