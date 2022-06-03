@@ -19,14 +19,14 @@
             <td th:text="${weekday.name}"></td>
             <!-- Add new meal form -->
             <td>
-                <form th:method="post" th:action="@{'/planner/weekday/new-meal'}" th:object="${weekday}">
-                    <p>Meal name: <input type="text" maxlength="20" th:field="*{name}" /></p>
+                <form th:method="post" th:action="@{'/planner/weekday/new-meal'}" th:object="${meal}">
                     <input type="hidden" th:value="${weekday.id}" name="weekday_id"/>
-                    <input type="hidden" th:value="0" name="kcal"/>
-                    <input type="hidden" th:value="0" name="protein"/>
-                    <input type="hidden" th:value="0" name="sat_fat"/>
-                    <input type="hidden" th:value="0" name="fiveADay"/>
-                    <input type="hidden" th:value="0" name="cost"/>
+                    <p>Meal name: <input type="text" maxlength="20" th:field="*{name}" /></p>
+                    <p>Calories (kcal): <input type="number" maxlength="20" th:field="*{kcal}" /></p>
+                    <p>Protein (g): <input type="number" maxlength="20" th:field="*{protein}" /></p>
+                    <p>Saturated Fat (g): <input type="number" maxlength="20" th:field="*{sat_fat}" /></p>
+                    <p>Five-A-Day: <input type="number" maxlength="20" th:field="*{fiveADay}" /></p>
+                    <p>Cost: <input type="number" maxlength="20" th:field="*{cost}" /></p>
                     <button type = "submit">New Meal</button>
                 </form>
             </td>
@@ -37,7 +37,14 @@
                 </form>
             </td>
             <!-- Meal list -->
-            <td th:each="meal : ${weekday.meals}" th:text="${meal.id}"></td>
+            <td th:each="meal : ${weekday.meals}">
+                <p th:text="${meal.name}"></p>
+                <p th:text="'Calories (kcal): ' + ${meal.kcal}"></p>
+                <p th:text="'Protein (g): ' + ${meal.protein}"></p>
+                <p th:text="'Saturated Fat (g): ' + ${meal.sat_fat}"></p>
+                <p th:text="'Five-A-Day: ' + ${meal.fiveADay}"></p>
+                <p th:text="'Cost: ' + ${meal.cost}"></p>
+            </td>
         </tr>
     </table>
 </body>
